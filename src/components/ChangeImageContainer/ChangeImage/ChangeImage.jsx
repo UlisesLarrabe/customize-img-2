@@ -92,6 +92,7 @@ const ChangeImage = () => {
                         id={ef.id}
                         onChange={handleChange}
                         className="input input-bordered input-info"
+                        placeholder={ef.rec}
                       />
                     </div>
                   ))}

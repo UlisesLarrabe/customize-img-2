@@ -1,6 +1,6 @@
 export const INITIAL_STATE = {
-  height: 400,
-  width: 600,
+  height: 600,
+  width: 800,
   pixelation: 20,
   image: "",
   brightness: 30,

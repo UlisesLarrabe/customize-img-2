@@ -42,8 +42,8 @@ export function CloudinaryProvider({ children }) {
       id: 1,
       funct: "resizeFillImage",
       inputs: [
-        { type: "number", name: "height" },
-        { type: "number", name: "width" },
+        { type: "number", name: "height", rec:600 },
+        { type: "number", name: "width", rec:800 },
       ],
     },
     {
@@ -51,8 +51,8 @@ export function CloudinaryProvider({ children }) {
       id: 2,
       funct: "resizeImage",
       inputs: [
-        { type: "number", name: "height" },
-        { type: "number", name: "width" },
+        { type: "number", name: "height",  rec:600  },
+        { type: "number", name: "width",  rec:800  },
       ],
     },
     {
@@ -67,14 +67,14 @@ export function CloudinaryProvider({ children }) {
       info: "Hide faces in your images",
       id: 7,
       funct: "pixelFace",
-      inputs: [{ type: "number", name: "pixelation" }],
+      inputs: [{ type: "number", name: "pixelation", rec:20 }],
     },
     {
       effect: "Adjust image brightness",
       info: "Adjust the brightness of an image",
       id: 8,
       funct: "imageBrightness",
-      inputs: [{ type: "number", name: "brightness" }],
+      inputs: [{ type: "number", name: "brightness", rec:30 }],
     },
   ];
 
