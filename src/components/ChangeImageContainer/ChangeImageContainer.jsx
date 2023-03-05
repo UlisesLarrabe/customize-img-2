@@ -19,7 +19,7 @@ const ChangeImageContainer = () => {
   };
   return (
     <div className="change-image-cont">
-      <h1 className="text-5xl font-bold mb-8">Start customizing your image!</h1>
+      <h1 className="text-white font-bold mb-8 mt-10">Start customizing your image!</h1>
 
       {!carg ? (
         <div>

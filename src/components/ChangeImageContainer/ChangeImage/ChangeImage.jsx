@@ -7,7 +7,8 @@ import {
 import "../../../scss/ChangeImage.scss";
 import ShowImage from "../../ShowImage/ShowImage";
 const ChangeImage = () => {
-  const { effects, getFunction, functionName, url, resetImage } = useCloudinaryContext();
+  const { effects, getFunction, functionName, url, resetImage } =
+    useCloudinaryContext();
   const [effect, setEffect] = useState({});
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
   const [inputs, setInputs] = useState([]);
@@ -52,8 +53,8 @@ const ChangeImage = () => {
   };
 
   const handleUndoChange = () => {
-    resetImage()
-  }
+    resetImage();
+  };
 
   return (
     <>
@@ -71,12 +72,12 @@ const ChangeImage = () => {
         <div className="set-effects">
           {effect && (
             <div className="cont">
-              <h2 className="text-xl text-white mt-5" >{effect.effect}</h2>
+              <h2 className="text-xl text-white mt-5 font-bold">{effect.effect}</h2>
               {inputs && (
                 <div className="div-gen">
                   {inputs.map((ef) => (
                     <div className="div-inputs mt-10">
-                      <label key={ef.name} htmlFor={ef.name}>
+                      <label key={ef.name} htmlFor={ef.name} className="text-white">
                         {ef.name.toUpperCase()}
                       </label>
                       <input
@@ -88,6 +89,10 @@ const ChangeImage = () => {
                       />
                     </div>
                   ))}
+                </div>
+              )} { !functionName && (
+                <div className="div-gen h-full font-bold text-xl">
+                  <h2 className="mt-20 text-white">Select an effect to start</h2>
                 </div>
               )}
               <div className="but">
@@ -115,6 +120,13 @@ const ChangeImage = () => {
       <div className="show-image">
         <ShowImage />
       </div>
+      <a
+        className="btn btn-outline btn-accent mt-10 mb-10"
+        href={url}
+        target="_blank"
+      >
+        See full image
+      </a>
     </>
   );
 };
