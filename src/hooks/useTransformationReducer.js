@@ -3,7 +3,6 @@ export const INITIAL_STATE = {
   width: 600,
   pixelation: 20,
   image: "",
-  loader: false,
   brightness: 30,
 };
 
@@ -19,12 +18,6 @@ export const formReducer = (state, action) => {
 
     case "CHANGE_IMAGE":
       return { ...state, image: action.payload.value };
-
-    case "ERROR":
-      return { ...state, error: action.payload.value };
-
-    case "LOADER":
-      return { ...state, loader: action.payload.value };
 
     default:
       return state;

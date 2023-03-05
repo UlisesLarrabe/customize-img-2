@@ -8,7 +8,7 @@ const ShowImage = () => {
       {!url ? (
         <img src={loadingImg} alt="Loading image" />
       ) : (
-        <img src={url} alt={url} />
+        <img src={url} alt="Image provided from the user" />
       )}
     </div>
   );

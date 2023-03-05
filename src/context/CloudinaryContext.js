@@ -4,10 +4,7 @@ import {
   backgroundRemoval,
   pixelate,
 } from "@cloudinary/url-gen/actions/effect";
-import {
-  fill,
-  scale,
-} from "@cloudinary/url-gen/actions/resize";
+import { fill, scale } from "@cloudinary/url-gen/actions/resize";
 import { max } from "@cloudinary/url-gen/actions/roundCorners";
 import { faces } from "@cloudinary/url-gen/qualifiers/region";
 import { createContext, useContext, useState } from "react";
@@ -20,10 +17,8 @@ export const useCloudinaryContext = () => {
 };
 
 export function CloudinaryProvider({ children }) {
-  const [processing, setProcessing] = useState(true);
   const [url, setUrl] = useState("");
   const [functionName, setFunctionName] = useState("");
-  const [effect, setEffect] = useState([]);
   const [theImage, setTheImage] = useState("");
 
   const cloudinary = new Cloudinary({
@@ -39,7 +34,7 @@ export function CloudinaryProvider({ children }) {
     {
       effect: "Remove image's background",
       id: 0,
-      funct: "uploadImage",
+      funct: "removeBackImage",
       inputs: false,
     },
     {
@@ -83,47 +78,6 @@ export function CloudinaryProvider({ children }) {
     },
   ];
 
-  const uploadImage = (image) => {
-    const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", process.env.REACT_APP_UPLOADPRESET);
-    data.append("cloud:name", process.env.REACT_APP_CLOUDNAME);
-    fetch(
-      `https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUDNAME}/image/upload`,
-      {
-        method: "post",
-        body: data,
-      }
-    )
-      .then((resp) => resp.json())
-      .then((data) => {
-        setUrl(data.url);
-        setProcessing(false);
-        const withoutBg = cloudinary
-          .image(data.public_id)
-          .effect(backgroundRemoval())
-          .toURL();
-        setUrl(withoutBg);
-      })
-      .catch((err) => console.log(err));
-  };
-
-  let intervalId;
-  let count = 0;
-
-  if (!processing) {
-    clearInterval(intervalId);
-    intervalId = setInterval(() => {
-      count++;
-      let img = new Image();
-      img.src = url;
-      img.onload = () => {
-        setProcessing(true);
-        clearInterval(intervalId);
-      };
-    }, 500);
-  }
-
   const uploadToCld = (image, doFunction) => {
     const data = new FormData();
     data.append("file", image);
@@ -139,7 +93,7 @@ export function CloudinaryProvider({ children }) {
       .then((resp) => resp.json())
       .then((data) => {
         setUrl(data.url);
-        setProcessing(false);
+
         doFunction(data.public_id);
       })
       .catch((error) => console.log(error));
@@ -162,9 +116,19 @@ export function CloudinaryProvider({ children }) {
       .then((data) => {
         setUrl(data.url);
         setTheImage(data.url);
-        setProcessing(false);
       })
       .catch((error) => console.log(error));
+  };
+
+  const removeBackImage = (image) => {
+    const removeTheBackground = (data) => {
+      const myImage = cloudinary.image(data);
+      myImage.effect(backgroundRemoval());
+      const myUrl = myImage.toURL();
+      setUrl(myUrl);
+    };
+
+    uploadToCld(image, removeTheBackground);
   };
 
   const resizeFillImage = (image, width, height) => {
@@ -216,7 +180,7 @@ export function CloudinaryProvider({ children }) {
       .then((data) => {
         setUrl(data.url);
         console.log(data);
-        setProcessing(false);
+
         const myImage = cloudinary.image(data.public_id);
         myImage.effect(pixelate().squareSize(pixelation).region(faces()));
         const myUrl = myImage.toURL();
@@ -237,7 +201,7 @@ export function CloudinaryProvider({ children }) {
 
   const functions = [
     { function: resizeFillImage },
-    { function: uploadImage },
+    { function: removeBackImage },
     { function: resizeImage },
     { function: profileImage },
     { function: pixelFace },
@@ -251,31 +215,19 @@ export function CloudinaryProvider({ children }) {
     return setFunctionName(functionEffect);
   };
 
-  const getEffectByParams = (idParams) => {
-    const getEffect = effects.find((ef) => {
-      return ef.funct === idParams;
-    });
-    return setEffect(getEffect);
-  };
-
   const resetImage = () => {
     setUrl(theImage);
-  }
+  };
 
   return (
     <CloudinaryContext.Provider
       value={{
-        processing,
         url,
-        uploadImage,
-        count,
         getFunction,
         effects,
         functionName,
-        effect,
-        getEffectByParams,
         uploadTheImage,
-        resetImage
+        resetImage,
       }}
     >
       {children}

@@ -61,7 +61,7 @@ const ChangeImage = () => {
       <div className="menu-effects bg-base-100">
         <ul>
           {effects.map((ef) => (
-            <li onClick={() => handleEffect(ef)} key={ef.id}>
+            <li onClick={() => handleEffect(ef)} key={ef.id} className="font-bold">
               {ef.effect}
             </li>
           ))}
@@ -72,12 +72,18 @@ const ChangeImage = () => {
         <div className="set-effects">
           {effect && (
             <div className="cont">
-              <h2 className="text-xl text-white mt-5 font-bold">{effect.effect}</h2>
+              <h2 className="text-xl text-white mt-5 font-bold">
+                {effect.effect}
+              </h2>
               {inputs && (
                 <div className="div-gen">
                   {inputs.map((ef) => (
-                    <div className="div-inputs mt-10">
-                      <label key={ef.name} htmlFor={ef.name} className="text-white">
+                    <div className="div-inputs mt-10" key={ef.name}>
+                      <label
+                        key={ef.name}
+                        htmlFor={ef.name}
+                        className="text-white"
+                      >
                         {ef.name.toUpperCase()}
                       </label>
                       <input
@@ -90,9 +96,12 @@ const ChangeImage = () => {
                     </div>
                   ))}
                 </div>
-              )} { !functionName && (
+              )}{" "}
+              {!functionName && (
                 <div className="div-gen h-full font-bold text-xl">
-                  <h2 className="mt-20 text-white">Select an effect to start</h2>
+                  <h2 className="mt-20 text-white">
+                    Select an effect to start
+                  </h2>
                 </div>
               )}
               <div className="but">
