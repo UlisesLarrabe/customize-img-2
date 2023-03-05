@@ -52,6 +52,8 @@ const ChangeImage = () => {
     }
   };
 
+  console.log(functionName);
+
   const handleUndoChange = () => {
     resetImage();
   };
