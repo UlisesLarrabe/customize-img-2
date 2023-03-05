@@ -108,22 +108,22 @@ const ChangeImage = () => {
                 </div>
               )}
               <div className="but">
-                {functionName && (
+                
                   <button
                     onClick={handleSetChanges}
                     className="btn btn-outline btn-success "
                   >
                     Set changes
                   </button>
-                )}
-                {functionName && (
+                
+                
                   <button
                     onClick={handleUndoChange}
                     className="btn btn-outline btn-warning "
                   >
                     Reset picture
                   </button>
-                )}
+                
               </div>
             </div>
           )}
