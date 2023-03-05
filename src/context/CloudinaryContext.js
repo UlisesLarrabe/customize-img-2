@@ -30,54 +30,6 @@ export function CloudinaryProvider({ children }) {
     },
   });
 
-  const effects = [
-    {
-      effect: "Remove image's background",
-      id: 0,
-      funct: "removeBackImage",
-      inputs: false,
-    },
-    {
-      effect: "Resize an image to fill given dimensions",
-      id: 1,
-      funct: "resizeFillImage",
-      inputs: [
-        { type: "number", name: "height", rec:600 },
-        { type: "number", name: "width", rec:800 },
-      ],
-    },
-    {
-      effect: "Resize an image",
-      id: 2,
-      funct: "resizeImage",
-      inputs: [
-        { type: "number", name: "height",  rec:600  },
-        { type: "number", name: "width",  rec:800  },
-      ],
-    },
-    {
-      effect: "Convert image into profile image",
-      info: "Convert your images to a profile image",
-      id: 4,
-      funct: "profileImage",
-      input: false,
-    },
-    {
-      effect: "Pixelate faces",
-      info: "Hide faces in your images",
-      id: 7,
-      funct: "pixelFace",
-      inputs: [{ type: "number", name: "pixelation", rec:20 }],
-    },
-    {
-      effect: "Adjust image brightness",
-      info: "Adjust the brightness of an image",
-      id: 8,
-      funct: "imageBrightness",
-      inputs: [{ type: "number", name: "brightness", rec:30 }],
-    },
-  ];
-
   const uploadToCld = (image, doFunction) => {
     const data = new FormData();
     data.append("file", image);
@@ -198,6 +150,55 @@ export function CloudinaryProvider({ children }) {
 
     uploadToCld(image, imageTheBrightness);
   };
+
+  
+  const effects = [
+    {
+      effect: "Remove image's background",
+      id: 0,
+      funct: removeBackImage,
+      inputs: false,
+    },
+    {
+      effect: "Resize an image to fill given dimensions",
+      id: 1,
+      funct: resizeFillImage,
+      inputs: [
+        { type: "number", name: "height", rec:600 },
+        { type: "number", name: "width", rec:800 },
+      ],
+    },
+    {
+      effect: "Resize an image",
+      id: 2,
+      funct: resizeImage,
+      inputs: [
+        { type: "number", name: "height",  rec:600  },
+        { type: "number", name: "width",  rec:800  },
+      ],
+    },
+    {
+      effect: "Convert image into profile image",
+      info: "Convert your images to a profile image",
+      id: 4,
+      funct: profileImage,
+      input: false,
+    },
+    {
+      effect: "Pixelate faces",
+      info: "Hide faces in your images",
+      id: 7,
+      funct: pixelFace,
+      inputs: [{ type: "number", name: "pixelation", rec:20 }],
+    },
+    {
+      effect: "Adjust image brightness",
+      info: "Adjust the brightness of an image",
+      id: 8,
+      funct: imageBrightness,
+      inputs: [{ type: "number", name: "brightness", rec:30 }],
+    },
+  ];
 
   const functions = [
     { function: resizeFillImage },

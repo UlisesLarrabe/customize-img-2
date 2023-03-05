@@ -34,25 +34,25 @@ const ChangeImage = () => {
     getFunction(effect.funct);
   }, [effect]);
 
+  console.log(effect.funct);
+
   const handleSetChanges = () => {
     dispatch({ type: "TRANSFORM" });
 
     switch (effect.funct) {
       case "pixelFace":
-        functionName.function(url, state.pixelation);
+        effect.funct(url, state.pixelation);
         break;
 
       case "imageBrightness":
-        functionName.function(url, state.brightness);
+        effect.funct(url, state.brightness);
         break;
 
       default:
-        functionName.function(url, state.width, state.height);
+        effect.funct(url, state.width, state.height);
         break;
     }
   };
-
-  console.log(functionName);
 
   const handleUndoChange = () => {
     resetImage();
@@ -100,13 +100,7 @@ const ChangeImage = () => {
                   ))}
                 </div>
               )}{" "}
-              {!functionName && (
-                <div className="div-gen h-full font-bold text-xl">
-                  <h2 className="mt-20 text-white">
-                    Select an effect to start
-                  </h2>
-                </div>
-              )}
+              
               <div className="but">
                 
                   <button
