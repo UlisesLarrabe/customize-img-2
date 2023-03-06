@@ -7,7 +7,7 @@ import {
 import "../../../scss/ChangeImage.scss";
 import ShowImage from "../../ShowImage/ShowImage";
 const ChangeImage = () => {
-  const { effects, getFunction, functionName, url, resetImage } =
+  const { effects, url, resetImage } =
     useCloudinaryContext();
   const [effect, setEffect] = useState({});
   const [state, dispatch] = useReducer(formReducer, INITIAL_STATE);
@@ -31,15 +31,12 @@ const ChangeImage = () => {
     } else {
       setInputs(false);
     }
-    getFunction(effect.funct);
   }, [effect]);
-
-  console.log(effect.funct);
 
   const handleSetChanges = () => {
     dispatch({ type: "TRANSFORM" });
 
-    switch (effect.funct) {
+    switch (effect.nameFunct) {
       case "pixelFace":
         effect.funct(url, state.pixelation);
         break;
@@ -63,7 +60,11 @@ const ChangeImage = () => {
       <div className="menu-effects bg-base-100">
         <ul>
           {effects.map((ef) => (
-            <li onClick={() => handleEffect(ef)} key={ef.id} className="font-bold">
+            <li
+              onClick={() => handleEffect(ef)}
+              key={ef.id}
+              className="font-bold"
+            >
               {ef.effect}
             </li>
           ))}
@@ -100,24 +101,31 @@ const ChangeImage = () => {
                   ))}
                 </div>
               )}{" "}
-              
+              {!effect.effect && (
+                <div className="div-gen h-full font-bold text-xl">
+                  <h2 className="mt-20 text-white">
+                    Select an effect to start
+                  </h2>
+                </div>
+              )}
               <div className="but">
-                
+                {effect.effect && (
                   <button
                     onClick={handleSetChanges}
                     className="btn btn-outline btn-success "
                   >
                     Set changes
                   </button>
-                
-                
+                )}
+
+                {effect.effect && (
                   <button
                     onClick={handleUndoChange}
                     className="btn btn-outline btn-warning "
                   >
                     Reset picture
                   </button>
-                
+                )}
               </div>
             </div>
           )}

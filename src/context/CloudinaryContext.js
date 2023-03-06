@@ -18,7 +18,6 @@ export const useCloudinaryContext = () => {
 
 export function CloudinaryProvider({ children }) {
   const [url, setUrl] = useState("");
-  const [functionName, setFunctionName] = useState("");
   const [theImage, setTheImage] = useState("");
 
   const cloudinary = new Cloudinary({
@@ -131,8 +130,6 @@ export function CloudinaryProvider({ children }) {
       .then((resp) => resp.json())
       .then((data) => {
         setUrl(data.url);
-        console.log(data);
-
         const myImage = cloudinary.image(data.public_id);
         myImage.effect(pixelate().squareSize(pixelation).region(faces()));
         const myUrl = myImage.toURL();
@@ -157,12 +154,14 @@ export function CloudinaryProvider({ children }) {
       effect: "Remove image's background",
       id: 0,
       funct: removeBackImage,
+      nameFunct: "removeBackImage",
       inputs: false,
     },
     {
       effect: "Resize an image to fill given dimensions",
       id: 1,
       funct: resizeFillImage,
+      nameFunct:"resizeFillImage",
       inputs: [
         { type: "number", name: "height", rec:600 },
         { type: "number", name: "width", rec:800 },
@@ -172,6 +171,7 @@ export function CloudinaryProvider({ children }) {
       effect: "Resize an image",
       id: 2,
       funct: resizeImage,
+      nameFunct:"resizeImage",
       inputs: [
         { type: "number", name: "height",  rec:600  },
         { type: "number", name: "width",  rec:800  },
@@ -180,41 +180,28 @@ export function CloudinaryProvider({ children }) {
     {
       effect: "Convert image into profile image",
       info: "Convert your images to a profile image",
-      id: 4,
+      id: 3,
       funct: profileImage,
+      nameFunct:"profileImage",
       input: false,
     },
     {
       effect: "Pixelate faces",
       info: "Hide faces in your images",
-      id: 7,
+      id: 4,
       funct: pixelFace,
+      nameFunct:"pixelFace",
       inputs: [{ type: "number", name: "pixelation", rec:20 }],
     },
     {
       effect: "Adjust image brightness",
       info: "Adjust the brightness of an image",
-      id: 8,
+      id: 5,
       funct: imageBrightness,
+      nameFunct:"imageBrightness",
       inputs: [{ type: "number", name: "brightness", rec:30 }],
     },
   ];
-
-  const functions = [
-    { function: resizeFillImage },
-    { function: removeBackImage },
-    { function: resizeImage },
-    { function: profileImage },
-    { function: pixelFace },
-    { function: imageBrightness },
-  ];
-
-  const getFunction = (changeImage) => {
-    const functionEffect = functions.find((funct) => {
-      return funct.function.name === changeImage;
-    });
-    return setFunctionName(functionEffect);
-  };
 
   const resetImage = () => {
     setUrl(theImage);
@@ -224,9 +211,7 @@ export function CloudinaryProvider({ children }) {
     <CloudinaryContext.Provider
       value={{
         url,
-        getFunction,
         effects,
-        functionName,
         uploadTheImage,
         resetImage,
       }}
